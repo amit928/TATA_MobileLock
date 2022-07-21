@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
+import { StatusBar } from 'react-native'
 import { Button, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 const TATA = require('./images/TATA.png')
 export default class WelcomeScreen extends Component {
-
+    
     render() {
         const { navigation } = this.props
         return (
             <View >
+                <StatusBar backgroundColor={"black"} />
                 <View style={{ alignItems: "center", justifyContent: "center", height: "60%" }}>
                     <Image source={TATA} style={{ height: 50, width: 200, resizeMode: "center" }} />
                 </View>
