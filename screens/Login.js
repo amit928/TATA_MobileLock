@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { StatusBar } from 'react-native'
 import { Button, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { BASE_URL } from '../constants'
+import { StatusBar } from 'expo-status-bar'
 
 const TATA = require('./images/TATA.png')
 export default class Login extends Component {
@@ -57,7 +57,7 @@ export default class Login extends Component {
     render() {
         return (
             <View style={{ backgroundColor: "#3c9bfa" }}>
-                <StatusBar barStyle={'light-content'} />
+                <StatusBar style={{backgroundColor:"3c9bfa"}} />
                 <View style={{ alignItems: "flex-start", justifyContent: "flex-end", height: "30%", marginLeft: 30, paddingBottom: 40 }}>
                     <Text style={{ fontSize: 30, color: "white", fontWeight: "bold" }}>Sign In</Text>
                     <Text style={{ color: "white", fontSize: 12, fontWeight: "bold", marginTop: 5 }}>Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document.</Text>

@@ -1,5 +1,5 @@
+import { StatusBar } from 'expo-status-bar'
 import React, { Component } from 'react'
-import { StatusBar } from 'react-native'
 import { Button, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 const TATA = require('./images/TATA.png')
@@ -9,7 +9,7 @@ export default class WelcomeScreen extends Component {
         const { navigation } = this.props
         return (
             <View >
-                <StatusBar backgroundColor={"black"} />
+                <StatusBar style={{backgroundColor:"3c9bfa"}} />
                 <View style={{ alignItems: "center", justifyContent: "center", height: "60%" }}>
                     <Image source={TATA} style={{ height: 50, width: 200, resizeMode: "center" }} />
                 </View>
