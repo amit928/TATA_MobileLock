@@ -56,8 +56,8 @@ export default class Login extends Component {
 
     render() {
         return (
-            <View style={{ backgroundColor: "#3c9bfa" }}>
-                <StatusBar style={{backgroundColor:"3c9bfa"}} />
+            <View style={{ backgroundColor: "#004342" }}>
+                <StatusBar style={{backgroundColor:"#004342"}} />
                 <View style={{ alignItems: "flex-start", justifyContent: "flex-end", height: "30%", marginLeft: 30, paddingBottom: 40 }}>
                     <Text style={{ fontSize: 30, color: "white", fontWeight: "bold" }}>Sign In</Text>
                     <Text style={{ color: "white", fontSize: 12, fontWeight: "bold", marginTop: 5 }}>Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document.</Text>
@@ -79,7 +79,7 @@ export default class Login extends Component {
 
                         </View>
                         <View style={{ marginTop: 10 }}>
-                            <TouchableOpacity style={{ backgroundColor: "#3c9bfa", borderWidth: 1, borderColor: "#3c9bfa", borderRadius: 30, width: 280, height: 50, alignItems: "center", justifyContent: "center" }} onPress={() => this.onLogin()}>
+                            <TouchableOpacity style={{ backgroundColor: "#004342", borderWidth: 1, borderColor: "#004342", borderRadius: 30, width: 280, height: 50, alignItems: "center", justifyContent: "center" }} onPress={() => this.onLogin()}>
                                 <Text style={{ color: "#fff", fontWeight: "bold" }}>Login</Text>
                             </TouchableOpacity>
                         </View>
