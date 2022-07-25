@@ -18,7 +18,7 @@ function App() {
         <Stack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Login" component={Login} options={{ headerTitle: '', headerTransparent: true, headerTintColor:"white" }} />
         <Stack.Screen name="Home" component={Home} options={{ headerBackVisible: false,  headerTitle: '', headerTransparent: true  }} />
-        <Stack.Screen name="CreateTask" component={CreateTask} options={{  headerTitle: '', headerTransparent: true,  headerTintColor:"white"  }} />
+        <Stack.Screen name="CreateTask" component={CreateTask} options={{  headerTitle: 'Create Task', headerTransparent: true,  headerTintColor:"white"  }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -4,7 +4,7 @@ import { StatusBar } from 'expo-status-bar'
 import { Icon } from '@rneui/themed';
 import { Card } from '@rneui/base';
 
-const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
 class Home extends Component {
   constructor(props) {
@@ -107,7 +107,7 @@ class Home extends Component {
               </TouchableOpacity>
             </View>
           </View>
-          <TouchableOpacity style={styles.footer} onPress={() => this.props.navigation.navigate('CreateTask')}>
+          <TouchableOpacity style={styles.footer} onPress={() => this.props.navigation.navigate('CreateTask', {staf_sl: this.state.myData.staf_sl})}>
             <Text style={{ textAlign: "center", fontWeight: "bold", color: "#004342" }}>CREATE TASK</Text>
           </TouchableOpacity>
         </View>
@@ -126,6 +126,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 3,
   },
-  footer: { position: "absolute", bottom: 10, left: 10, right: 10, paddingVertical: 17, backgroundColor: "#73e2b2", borderRadius: 15, width: "95%" }
+  footer: { position: "absolute", bottom: 15, alignSelf:"center", paddingVertical: 17, backgroundColor: "#73e2b2", borderRadius: 15, width: "92%" }
 })
 export default Home;

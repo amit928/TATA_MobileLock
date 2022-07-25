@@ -12,3 +12,11 @@ export function formateDate(date) {
     }
     return `${date.getDate()}-${month}-${date.getUTCFullYear()}`;
   };
+
+export function validateTowerList(data){
+  var towerList =[]
+  data && data.map((value, index)=>{
+    towerList.push({label: value["DeviceFname"], value: value["DeviceId"]})
+  })
+  return towerList
+}
