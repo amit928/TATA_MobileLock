@@ -2,8 +2,8 @@ import { StatusBar } from 'expo-status-bar'
 import React, { Component } from 'react'
 import { Button, Image, ImageBackground, StyleSheet, Text, View } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-const TATA_ICON = require('./images/TATA2.png')
-const background = require('./images/background.jpeg')
+const TATA_ICON = require('../images/TATA2.png')
+const background = require('../images/background.jpeg')
 
 export default class SplashScreen extends Component {
     componentDidMount = () => {

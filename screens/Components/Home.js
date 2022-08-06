@@ -2,7 +2,8 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { Component } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { Icon } from '@rneui/themed';
-import { Card } from '@rneui/base';
+import { fetchDashboard } from '../redux/action';
+import { connect } from 'react-redux';
 
 const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
@@ -11,15 +12,14 @@ class Home extends Component {
     super(props)
 
     this.state = {
-      myData: this.props.route.params.data.data[0],
-      todayDate: new Date()
     }
   }
+
   formattingDate = (date) => {
     return `${days[date.getDay()]},  ${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`
   }
+
   render() {
-    console.log(this.props.route.params.data)
     return (
       <View style={{ backgroundColor: "#F7F9FF" }}>
         <StatusBar style={{ backgroundColor: "#004342" }} />
@@ -27,7 +27,7 @@ class Home extends Component {
           <View style={styles.headerName}>
             <View style={{ flexDirection: "row" }}>
               <View>
-                <Text style={{ fontSize: 22, color: "white", fontWeight: "bold" }}>{`Hello, ${this.state.myData.staf_nm}`}</Text>
+                <Text style={{ fontSize: 22, color: "white", fontWeight: "bold" }}>{`Hello, ${this.props.dashboardDetails.staf_nm}`}</Text>
                 <Text style={{ color: "#73e2b2", fontWeight: "bold", fontSize: 12, }}>{this.formattingDate(new Date())}</Text>
               </View>
               <View style={{ width: "40%", paddingTop: 8 }} >
@@ -41,17 +41,17 @@ class Home extends Component {
             </View>
             <View style={{ flexDirection: "row", marginBottom: 50, marginTop: -20 }}>
               <View>
-                <Text style={{ fontSize: 40, color: "#73e2b2", fontWeight: "bold" }}>{this.state.myData["Pending_Task"]}</Text>
+                <Text style={{ fontSize: 40, color: "#73e2b2", fontWeight: "bold" }}>{this.props.dashboardDetails["Pending_Task"]}</Text>
                 <Text style={{ color: "#fff", fontSize: 13, }}>Tasks</Text>
                 <Text style={{ color: "#fff", fontSize: 13, }}>Pending</Text>
               </View>
               <View style={{ marginHorizontal: 40 }}>
-                <Text style={{ fontSize: 40, color: "#73e2b2", fontWeight: "bold" }}>{this.state.myData["Progress_Task"]}</Text>
+                <Text style={{ fontSize: 40, color: "#73e2b2", fontWeight: "bold" }}>{this.props.dashboardDetails["Progress_Task"]}</Text>
                 <Text style={{ color: "#fff", fontSize: 13, }}>Tasks </Text>
                 <Text style={{ color: "#fff", fontSize: 13, }}>In Progress</Text>
               </View>
               <View>
-                <Text style={{ fontSize: 40, color: "#73e2b2", fontWeight: "bold" }}>{this.state.myData["Completed_Task"]}</Text>
+                <Text style={{ fontSize: 40, color: "#73e2b2", fontWeight: "bold" }}>{this.props.dashboardDetails["Completed_Task"]}</Text>
                 <Text style={{ color: "#fff", fontSize: 13, }}>Tasks </Text>
                 <Text style={{ color: "#fff", fontSize: 13, }}>Completed </Text>
               </View>
@@ -59,7 +59,7 @@ class Home extends Component {
           </View>
           <View style={{ zIndex: 2, marginTop: -65 }}>
             <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
-              <TouchableOpacity style={styles.card}>
+              <TouchableOpacity style={styles.card} onPress={() => this.props.navigation.navigate('TodayTask', { staf_sl: this.props.loginDetails.staf_sl })}>
                 <View style={{ display: "flex", alignItems: "flex-start", borderRadius: 15, padding: 12, backgroundColor: "#BFCFFD", width: "35%", justifyContent: "center", marginBottom: 15 }}>
                   <Icon
                     name='calendar-check'
@@ -68,7 +68,7 @@ class Home extends Component {
                   />
                 </View>
                 <Text style={{ fontSize: 18, fontWeight: "bold", color: "#04376B" }}>Today's Task</Text>
-                <Text style={{ fontSize: 13, color: "#04376B" }}>34 New Task Added</Text>
+                <Text style={{ fontSize: 13, color: "#04376B" }}>{this.props.dashboardDetails.Todays_Task} New Task Added</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.card}>
                 <View style={{ display: "flex", alignItems: "flex-start", borderRadius: 15, padding: 12, backgroundColor: "#C9E884", width: "35%", justifyContent: "center", marginBottom: 15 }}>
@@ -103,11 +103,11 @@ class Home extends Component {
                   />
                 </View>
                 <Text style={{ fontSize: 18, fontWeight: "bold", color: "#04376B" }}>My Profile</Text>
-                <Text style={{ fontSize: 13, color: "#04376B" }}>{this.state.myData.staf_nm}</Text>
+                <Text style={{ fontSize: 13, color: "#04376B" }}>{this.props.dashboardDetails.staf_nm}</Text>
               </TouchableOpacity>
             </View>
           </View>
-          <TouchableOpacity style={styles.footer} onPress={() => this.props.navigation.navigate('CreateTask', {staf_sl: this.state.myData.staf_sl})}>
+          <TouchableOpacity style={styles.footer} onPress={() => {this.props.navigation.navigate('CreateTask', { staf_sl: this.props.loginDetails.staf_sl })}}>
             <Text style={{ textAlign: "center", fontWeight: "bold", color: "#004342" }}>CREATE TASK</Text>
           </TouchableOpacity>
         </View>
@@ -126,6 +126,19 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 3,
   },
-  footer: { position: "absolute", bottom: 15, alignSelf:"center", paddingVertical: 17, backgroundColor: "#73e2b2", borderRadius: 15, width: "92%" }
+  footer: { position: "absolute", bottom: 15, alignSelf: "center", paddingVertical: 17, backgroundColor: "#73e2b2", borderRadius: 15, width: "92%" }
 })
-export default Home;
+
+const mapStateToProps = store => {
+  return {
+    dashboardDetails: store.allInOneReducer.dashboardDetails,
+    loginDetails: store.allInOneReducer.loginDetails,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

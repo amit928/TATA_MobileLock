@@ -1,10 +1,12 @@
-import { Text, TextInput, View, StyleSheet, TouchableOpacity } from 'react-native'
+import { Text, TextInput, View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
 import React, { Component } from 'react'
-import DatePickerModal from './common/DatePickerModal'
-import { SCREEN, validateTowerList } from './constants'
+import DatePickerModal from '../common/DatePickerModal'
+import { formateDate, SCREEN } from '../constants'
 import { Card } from '@rneui/base'
 import { BASE_URL } from '../constants'
 import { Dropdown } from "react-native-element-dropdown";
+import { createTaskList, fetchTowerList } from '../redux/action'
+import { connect } from 'react-redux';
 
 class CreateTask extends Component {
     constructor(props) {
@@ -22,42 +24,23 @@ class CreateTask extends Component {
     }
 
     componentDidMount = () => {
-        const requestOptions = {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        };
-        fetch(`${BASE_URL}/api/GetTowerList`, requestOptions)
-            .then(response => response.json())
-            .then(data =>
-                data.Code == '200' ?
-                    this.setState({ towerList: validateTowerList(data.data) })
-                    :
-                    alert(data.Code)
-            )
+        fetchTowerList((data) => this.setState({ towerList: data }))
     }
+
     createTask = () => {
-        const requestOptions = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ "DeviceId": this.state.tower, "staf_sl": this.props.route.params.staf_sl, "description": this.state.remark, "for_date": this.state.fromDate, "for_time": this.state.fromTime, "to_date": this.state.toDate, "to_time": this.state.toTime })
-        };
-        fetch(`${BASE_URL}/api/GetTowerList`, requestOptions)
-            .then(response => response.json())
-            .then(data =>
-                data.Code == '200' ?
-                    console.log(data)
-                    :
-                    alert(data.Code)
-            )
+        if (this.state.fromDate == '' || this.state.toDate == '', this.state.fromTime == '' || this.state.toTime == '' || this.state.tower == '' || this.state.remark == '') {
+            alert("Please fill all the field")
+        }
+        else {
+            var body = JSON.stringify({ "DeviceId": this.state.tower, "staf_sl": this.props.route.params.staf_sl, "description": this.state.remark, "for_date": formateDate(this.state.fromDate), "for_time": this.state.fromTime, "to_date": formateDate(this.state.toDate), "to_time": this.state.toTime })
+            this.props.createTaskList(this.props.route.params.staf_sl, body)
+        }
     }
 
     render() {
         return (
-            <View style={{ backgroundColor: "#004342", height: "100%" }}>
+            <View style={{ height: "100%", backgroundColor: "#004342", }}>
+
                 <Card containerStyle={{ marginTop: "30%", borderRadius: 10, marginHorizontal: "7%" }}>
                     <View>
                         <View style={{ marginBottom: 10 }}>
@@ -78,7 +61,6 @@ class CreateTask extends Component {
                                         labelField="label"
                                         valueField="value"
                                         placeholder={'Select'}
-                                        value={this.state.towerList.length > 0 && this.state.towerList[0].value}
                                         onChange={(item) => {
                                             this.setState({ tower: item.value });
                                         }}
@@ -94,7 +76,7 @@ class CreateTask extends Component {
                             <DatePickerModal
                                 value={this.state.fromDate}
                                 onConfirm={(data) => { this.setState({ fromDate: data }) }}
-                                placeholder='DD/MM/YY'
+                                placeholder='MM/DD/YY'
                                 onCancel={() => { }}
                                 mode="date"
                             />
@@ -116,7 +98,7 @@ class CreateTask extends Component {
                             <DatePickerModal
                                 value={this.state.toDate}
                                 onConfirm={(data) => { this.setState({ toDate: data }) }}
-                                placeholder='DD/MM/YY'
+                                placeholder='MM/DD/YY'
                                 onCancel={() => { }}
                                 mode="date"
                             />
@@ -146,6 +128,7 @@ class CreateTask extends Component {
                                 borderWidth: 0.2
 
                             }}
+                            value={this.state.remark}
                             onChangeText={(text) => {
                                 this.setState({ remark: text });
                             }}
@@ -154,14 +137,27 @@ class CreateTask extends Component {
                     <View style={{ marginTop: 20, alignSelf: "center", flexDirection: "row" }}>
                     </View>
                 </Card>
-                <TouchableOpacity style={styles.footer} onPress={() => this.props.navigation.navigate('CreateTask')}>
+                <TouchableOpacity style={styles.footer} onPress={this.createTask}>
                     <Text style={{ textAlign: "center", fontWeight: "bold", color: "#fff" }}>CREATE</Text>
                 </TouchableOpacity>
             </View>
+
         )
     }
 }
 const styles = StyleSheet.create({
-    footer: { position: "absolute", bottom: 15, alignSelf: "center", paddingVertical: 15, backgroundColor: "#73e2b2", borderRadius: 15, width: "92%" }
+    footer: { alignSelf: "center", paddingVertical: 15, backgroundColor: "#73e2b2", borderRadius: 15, width: "92%", position: "relative", top: "26%" }
 })
-export default CreateTask;
+
+const mapStateToProps = store => {
+    return {
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        createTaskList: (id, body) => dispatch(createTaskList(id, body))
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateTask);

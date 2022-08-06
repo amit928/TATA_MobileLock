@@ -3,6 +3,7 @@ import { View, TouchableOpacity, Text } from 'react-native';
 import { formateDate } from '../constants';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import { Icon } from '@rneui/themed';
+import { validateTime } from '../constants';
 
 export default class DatePickerModal extends Component {
     constructor(props) {
@@ -24,22 +25,13 @@ export default class DatePickerModal extends Component {
                         style={{ color: "black", marginLeft: 10 }}
                         size={14}
                     />
-                    <Text style={{ paddingLeft: 10, fontSize: 13, color:"gray" }}>{this.props.value === '' ? this.state.text : this.props.mode == 'time' ? this.props.value : formateDate(this.props.value)}</Text>
+                    <Text style={{ paddingLeft: 10, fontSize: 13, color: "gray" }}>{this.props.value === '' ? this.state.text : this.props.mode == 'time' ? this.props.value : formateDate(this.props.value)}</Text>
                 </TouchableOpacity>
                 <DateTimePicker
                     isVisible={this.state.dateModal}
                     onConfirm={(data) => {
                         this.setState({ dateModal: false });
-                        //  this.props.onConfirm(this.props.mode == 'time' ? new Date(data).toLocaleString('en-US', {
-                        //     hour12: false,
-                        //     hour: '2-digit',
-                        //     minute: '2-digit',
-                        //   }) : data);
-                        console.log( new Date().toLocaleString('en-US', {
-                            hour12: false,
-                            hour: '2-digit',
-                            minute: '2-digit',
-                          }))
+                        this.props.onConfirm(this.props.mode == 'time' ? validateTime(new Date(data)) : data);
                     }}
                     onCancel={() => { this.setState({ dateModal: false }); this.props.onCancel() }}
                     mode={this.props.mode}

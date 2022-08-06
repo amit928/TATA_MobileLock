@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar'
 import React, { Component } from 'react'
 import { Button, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
-const TATA = require('./images/TATA.png')
+const TATA = require('../images/TATA.png')
 export default class WelcomeScreen extends Component {
     
     render() {
