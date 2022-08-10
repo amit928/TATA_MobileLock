@@ -17,9 +17,7 @@ class Login extends Component {
             password: ""
         }
     }
-
-
-
+ 
     logIn = () => {
         if (this.state.userID.trim() !== '' && this.state.password.trim() !== '') {
             var body = JSON.stringify({ "userid": this.state.userID, "password": this.state.password })

@@ -23,7 +23,8 @@ class TodayTask extends Component {
             openModal: false,
             date: '',
             time: '',
-            type: ''
+            type: '',
+            sl: ""
         }
     }
     componentDidMount = () => {
@@ -42,15 +43,20 @@ class TodayTask extends Component {
     }
     onSubmit = () => {
         var body = JSON.stringify({
-            "sl": this.props.route.params.staf_sl,
+            "sl": this.state.sl,
             "date": this.state.date,
             "time": this.state.time
         })
         this.props.changeTaskStatus(API_TYPE[this.state.type], body, this.props.route.params.staf_sl)
-        this.setState({ openModal: false })
+        this.setState({
+            openModal: false, date: '',
+            time: '',
+            type: '',
+            sl: ""
+        })
     }
     render() {
-        console.log(this.props.taskList)
+        console.log("this.props.taskList", this.props.taskList)
         return (
             <View style={{ backgroundColor: "#004342", width: "100%", height: "100%" }}>
                 <StatusBar style='light' />
@@ -87,17 +93,26 @@ class TodayTask extends Component {
                                             />
                                             <Text style={{ fontSize: 12, color: "white", marginLeft: 8 }}>{new Date(value.for_date).toLocaleDateString()}, {new Date(value.for_time).toLocaleTimeString()}  -  {new Date(value.to_date).toLocaleDateString()}, {new Date(value.to_time).toLocaleTimeString()}</Text>
                                         </View>
+                                        <View style={{ flexDirection: "row", marginBottom: 10 }}>
+                                            <Icon
+                                                name='hourglass-start'
+                                                type='font-awesome-5'
+                                                color='white'
+                                                size={16}
+                                            />
+                                            <Text style={{ fontSize: 12, color: "white", marginLeft: 10 }}>STATUS : {value.status}</Text>
+                                        </View>
                                         <Text style={{ fontWeight: "bold", fontSize: 13, color: "white" }}>{value.description}</Text>
                                         <View style={{ height: 0.5, backgroundColor: "gray", marginVertical: 10 }}></View>
                                         <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
 
-                                            <Button style={{ borderRadius: 10 }} disabled={this.showDisbale('start', value.request_status)} onPress={() => this.setState({ openModal: true, type: "Start" })}>
+                                            <Button style={{ borderRadius: 10 }} disabled={this.showDisbale('start', value.request_status)} onPress={() => this.setState({ openModal: true, type: "Start", sl: value.sl })}>
                                                 <Text style={{ fontWeight: "bold", color: "white" }}>Start</Text>
                                             </Button>
-                                            <Button style={{ backgroundColor: "#ccaf58", borderRadius: 10 }} disabled={this.showDisbale('extend', value.request_status)} onPress={() => this.setState({ openModal: true, type: "Extend" })}>
+                                            <Button style={{ backgroundColor: "#ccaf58", borderRadius: 10 }} disabled={this.showDisbale('extend', value.request_status)} onPress={() => this.setState({ openModal: true, type: "Extend", sl: value.sl })}>
                                                 <Text style={{ fontWeight: "bold", color: "white" }}>Extend</Text>
                                             </Button>
-                                            <Button style={{ backgroundColor: "#93cc96", borderRadius: 10 }} disabled={this.showDisbale('complete', value.request_status)} onPress={() => this.setState({ openModal: true, type: "Complete" })}>
+                                            <Button style={{ backgroundColor: "#93cc96", borderRadius: 10 }} disabled={this.showDisbale('complete', value.request_status)} onPress={() => this.setState({ openModal: true, type: "Complete", sl: value.sl })}>
                                                 <Text style={{ fontWeight: "bold", color: "white" }}>Complete</Text>
                                             </Button>
                                         </View>

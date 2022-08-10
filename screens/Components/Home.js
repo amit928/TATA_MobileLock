@@ -94,7 +94,7 @@ class Home extends Component {
                 <Text style={{ fontSize: 18, fontWeight: "bold", color: "#04376B" }}>Report</Text>
                 <Text style={{ fontSize: 13, color: "#04376B" }}>See all your report</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.card}>
+              <TouchableOpacity style={styles.card} onPress={() => this.props.navigation.navigate('Profile')}>
                 <View style={{ display: "flex", alignItems: "flex-start", borderRadius: 15, padding: 12, backgroundColor: "#CDFDF0", width: "35%", justifyContent: "center", marginBottom: 15 }}>
                   <Icon
                     name='person'
@@ -107,7 +107,7 @@ class Home extends Component {
               </TouchableOpacity>
             </View>
           </View>
-          <TouchableOpacity style={styles.footer} onPress={() => {this.props.navigation.navigate('CreateTask', { staf_sl: this.props.loginDetails.staf_sl })}}>
+          <TouchableOpacity style={styles.footer} onPress={() => { this.props.navigation.navigate('CreateTask', { staf_sl: this.props.loginDetails.staf_sl }) }}>
             <Text style={{ textAlign: "center", fontWeight: "bold", color: "#004342" }}>CREATE TASK</Text>
           </TouchableOpacity>
         </View>

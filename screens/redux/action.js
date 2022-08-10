@@ -1,6 +1,7 @@
 import { BASE_URL, validateTowerList } from "../constants";
 import { DASHBOARD, LOGIN_DETAILS, TASK_LIST } from "./actionType";
 import * as RootNavigation from '../RootNavigation';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 export const _storeData = async (data) => {
@@ -9,6 +10,7 @@ export const _storeData = async (data) => {
             'MyData',
             JSON.stringify(data)
         );
+        console.log(" I Am Storing")
     } catch (error) {
         // Error saving data
     }

@@ -8,17 +8,15 @@ const background = require('../images/background.jpeg')
 export default class SplashScreen extends Component {
     componentDidMount = () => {
         setTimeout(() => {
-            console.log(this.getData())
-            this.props.navigation.navigate("Welcome")
+            this.getData()
+            // this.props.navigation.navigate("Welcome")
         }, 3000);
     }
-    async getData() {
-        try {
-            const jsonValue = await AsyncStorage.getItem('MyData')
-            return jsonValue != null ? JSON.parse(jsonValue) : null;
-        } catch (e) {
-            // error reading value
-        }
+
+    getData = async () => {
+        AsyncStorage.getItem("MyData").then((value) => {
+            console.log(JSON.parse(value))
+        });
     }
     render() {
         return (
