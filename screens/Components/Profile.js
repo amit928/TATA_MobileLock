@@ -3,9 +3,28 @@ import React, { Component } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { Icon } from '@rneui/themed'
 import { StyleSheet } from 'react-native'
-import { Image } from 'native-base'
+import { Image } from 'native-base';
+import { connect } from 'react-redux'
+import { fetchProfileData } from '../redux/action'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
-export default class Profile extends Component {
+class Profile extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+        }
+    }
+
+    componentDidMount = () => {
+        this.props.getProfileData(this.props.route.params.staf_sl)
+    }
+
+    onLogout = () => {
+        AsyncStorage.removeItem('MyData').then(() => {
+            this.props.navigation.navigate('Welcome')
+        })
+    }
+
     render() {
         return (
             <View style={{ backgroundColor: "#e3e3e3" }}>
@@ -14,22 +33,22 @@ export default class Profile extends Component {
                     <View style={{ height: "35%", width: "99%", alignSelf: "center", backgroundColor: "#004342", borderBottomEndRadius: 30, borderBottomLeftRadius: 30 }}>
                     </View>
                     <View style={{ backgroundColor: "white", height: "20%", borderRadius: 25, width: "80%", alignSelf: "center", alignItems: "center", justifyContent: "space-evenly", marginTop: "-25%" }}>
-                        <Image source={require('../images/person.png')} style={{ height: 60, width: 60, borderRadius: 100, alignSelf: "center", marginTop: "-20%" }} />
+                        <Image source={require('../images/person.png')} alt='Profile Image' style={{ height: 60, width: 60, borderRadius: 100, alignSelf: "center", marginTop: "-20%" }} />
                         <View>
-                            <Text style={{ fontWeight: "bold", fontSize: 20, color: "#004342", textAlign: "center" }}>Hello, Saswat Panda</Text>
-                            <Text style={{ textAlign: "center" }}>+91 7684998887</Text>
+                            <Text style={{ fontWeight: "bold", fontSize: 20, color: "#004342", textAlign: "center" }}>Hello, {this.props.profileData.staf_nm}</Text>
+                            <Text style={{ textAlign: "center" }}>{this.props.profileData.emp_code}</Text>
                         </View>
                         <View>
-                            <Text style={{ fontWeight: "bold", color: "#15a305", fontSize: 17 }}>Project Manager (Epsum Labs)</Text>
+                            <Text style={{ fontWeight: "bold", color: "#15a305", fontSize: 17 }}>{this.props.profileData.desg_nm} ({this.props.profileData.dept_nm})</Text>
                         </View>
                     </View>
                     <View style={{ zIndex: 2, marginTop: -65 }}>
                     </View>
                     <View style={{ position: "absolute", width: "100%", bottom: 10 }}>
-                        <TouchableOpacity style={{ alignSelf: "center", paddingVertical: 15, backgroundColor: "#fff", borderRadius: 15, width: "92%", marginBottom:10 }} >
+                        <TouchableOpacity style={{ alignSelf: "center", paddingVertical: 15, backgroundColor: "#fff", borderRadius: 15, width: "92%", marginBottom: 10 }} >
                             <Text style={{ textAlign: "center", fontWeight: "bold", color: "#004342" }}>Change Password</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{ alignSelf: "center", paddingVertical: 15, backgroundColor: "#004342", borderRadius: 15, width: "92%", }} >
+                        <TouchableOpacity style={{ alignSelf: "center", paddingVertical: 15, backgroundColor: "#004342", borderRadius: 15, width: "92%", }} onPress={this.onLogout} >
                             <Text style={{ textAlign: "center", fontWeight: "bold", color: "#fff" }}>LOGOUT</Text>
                         </TouchableOpacity>
                     </View>
@@ -51,3 +70,17 @@ const styles = StyleSheet.create({
     },
     footer: { position: "absolute", bottom: 15, alignSelf: "center", paddingVertical: 17, backgroundColor: "#73e2b2", borderRadius: 15, width: "92%" }
 })
+
+const mapStateToProps = store => {
+    return {
+        profileData: store.allInOneReducer.profileData
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        getProfileData: (staf_sl) => dispatch(fetchProfileData(staf_sl))
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

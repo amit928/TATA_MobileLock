@@ -47,16 +47,21 @@ class TodayTask extends Component {
             "date": this.state.date,
             "time": this.state.time
         })
-        this.props.changeTaskStatus(API_TYPE[this.state.type], body, this.props.route.params.staf_sl)
-        this.setState({
-            openModal: false, date: '',
-            time: '',
-            type: '',
-            sl: ""
-        })
+        if (this.state.date !== '' && this.state.time !== '') {
+            this.props.changeTaskStatus(API_TYPE[this.state.type], body, this.props.route.params.staf_sl)
+            this.setState({
+                openModal: false, date: '',
+                time: '',
+                type: '',
+                sl: ""
+            })
+        }
+        else {
+            alert("Please select Date and Time")
+        }
+
     }
     render() {
-        console.log("this.props.taskList", this.props.taskList)
         return (
             <View style={{ backgroundColor: "#004342", width: "100%", height: "100%" }}>
                 <StatusBar style='light' />

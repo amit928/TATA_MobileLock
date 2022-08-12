@@ -1,23 +1,19 @@
-import { StatusBar } from 'expo-status-bar'
-import React, { Component } from 'react'
-import { Button, Image, ImageBackground, StyleSheet, Text, View } from 'react-native'
-import AsyncStorage from '@react-native-async-storage/async-storage';
-const TATA_ICON = require('../images/TATA2.png')
-const background = require('../images/background.jpeg')
+import { StatusBar } from 'expo-status-bar';
+import React, { Component } from 'react';
+import { Button, Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
+import { getData } from '../redux/action';
+const TATA_ICON = require('../images/TATA2.png');
+const background = require('../images/background.jpeg');
+import { connect } from 'react-redux';
 
-export default class SplashScreen extends Component {
+class SplashScreen extends Component {
     componentDidMount = () => {
         setTimeout(() => {
-            this.getData()
-            // this.props.navigation.navigate("Welcome")
+            this.props.getData()
         }, 3000);
     }
 
-    getData = async () => {
-        AsyncStorage.getItem("MyData").then((value) => {
-            console.log(JSON.parse(value))
-        });
-    }
+
     render() {
         return (
             <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -33,3 +29,16 @@ export default class SplashScreen extends Component {
         )
     }
 }
+
+const mapStateToProps = store => {
+    return {
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        getData: () => dispatch(getData())
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SplashScreen);

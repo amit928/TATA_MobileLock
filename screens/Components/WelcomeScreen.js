@@ -1,15 +1,30 @@
 import { StatusBar } from 'expo-status-bar'
 import React, { Component } from 'react'
-import { Button, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { BackHandler, Button, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 const TATA = require('../images/TATA.png')
 export default class WelcomeScreen extends Component {
-    
+
+
+    componentDidMount = () => {
+        BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
+    }
+
+    onBackPress = () => {
+        BackHandler.exitApp()
+        return true
+    };
+
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
+    }
+
+
     render() {
         const { navigation } = this.props
         return (
             <View >
-                <StatusBar style={{backgroundColor:"004342"}} />
+                <StatusBar style={{ backgroundColor: "004342" }} />
                 <View style={{ alignItems: "center", justifyContent: "center", height: "60%" }}>
                     <Image source={TATA} style={{ height: 50, width: 200, resizeMode: "center" }} />
                 </View>

@@ -1,5 +1,5 @@
 import { BASE_URL, validateTowerList } from "../constants";
-import { DASHBOARD, LOGIN_DETAILS, TASK_LIST } from "./actionType";
+import { DASHBOARD, LOGIN_DETAILS, PROFILE_DATA, TASK_LIST } from "./actionType";
 import * as RootNavigation from '../RootNavigation';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -10,7 +10,6 @@ export const _storeData = async (data) => {
             'MyData',
             JSON.stringify(data)
         );
-        console.log(" I Am Storing")
     } catch (error) {
         // Error saving data
     }
@@ -36,12 +35,23 @@ export function onLogin(body) {
                 }
                 else
                     alert(data.Code)
-            }
+            })
+    }
+}
 
-            )
-        // .catch(error => {
-        //     console.error('There was an error!', error);
-        // });
+export function getData() {
+    return function (dispatch) {
+        AsyncStorage.getItem("MyData").then((value) => {
+            if (value !== null) {
+                var value = JSON.parse(value)
+                dispatch({ type: LOGIN_DETAILS, payload: value })
+                dispatch(fetchDashboard(value.staf_sl))
+                RootNavigation.navigate("Home")
+            }
+            else {
+                RootNavigation.navigate("Welcome")
+            }
+        });
     }
 }
 
@@ -58,10 +68,11 @@ export function fetchDashboard(staf_sl) {
         fetch(`${BASE_URL}/api/Dashboard/${staf_sl}`, requestOptions)
             .then(response => response.json())
             .then(data =>
-                data.Code == '200' ?
-                    dispatch({ type: DASHBOARD, payload: data.data[0] })
-                    :
-                    alert(data.Code)
+              {if(data.Code == '200'){
+                dispatch({ type: DASHBOARD, payload: data.data[0] })
+              }
+                else
+                    alert(data.Code)}
             )
             .catch((error) => {
                 alert(`Something Went Wrong. error : ${error}`);
@@ -152,4 +163,28 @@ export function changeTaskStatus(type, body, staf_sl) {
             )
     }
 
+}
+
+export function fetchProfileData(staf_sl) {
+    const requestOptions = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: null
+    };
+    return function (dispatch) {
+        fetch(`${BASE_URL}/api/profile/${staf_sl}`, requestOptions)
+            .then(response => response.json())
+            .then(data =>
+                data.Code == '200' ?
+                    dispatch({ type: PROFILE_DATA, payload: data.data[0] })
+                    :
+                    alert(data.Code)
+            )
+            .catch((error) => {
+                alert(`Something Went Wrong. error : ${error}`);
+            });
+
+    }
 }

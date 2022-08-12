@@ -1,8 +1,7 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { BackHandler, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { Component } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { Icon } from '@rneui/themed';
-import { fetchDashboard } from '../redux/action';
 import { connect } from 'react-redux';
 
 const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
@@ -14,6 +13,19 @@ class Home extends Component {
     this.state = {
     }
   }
+
+  componentDidMount = () => {
+    BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
+}
+
+onBackPress = () => {
+    BackHandler.exitApp()
+    return true
+};
+
+componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
+}
 
   formattingDate = (date) => {
     return `${days[date.getDay()]},  ${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`
@@ -94,7 +106,7 @@ class Home extends Component {
                 <Text style={{ fontSize: 18, fontWeight: "bold", color: "#04376B" }}>Report</Text>
                 <Text style={{ fontSize: 13, color: "#04376B" }}>See all your report</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.card} onPress={() => this.props.navigation.navigate('Profile')}>
+              <TouchableOpacity style={styles.card} onPress={() => this.props.navigation.navigate('Profile', { staf_sl: this.props.loginDetails.staf_sl })}>
                 <View style={{ display: "flex", alignItems: "flex-start", borderRadius: 15, padding: 12, backgroundColor: "#CDFDF0", width: "35%", justifyContent: "center", marginBottom: 15 }}>
                   <Icon
                     name='person'
@@ -114,8 +126,8 @@ class Home extends Component {
       </View>
     )
   }
-
 }
+
 const styles = StyleSheet.create({
   headerName: { alignItems: "flex-start", justifyContent: "space-evenly", paddingLeft: 30, height: "50%", backgroundColor: "#004342", borderBottomLeftRadius: 30, borderBottomRightRadius: 30, marginHorizontal: 2, },
   card: {
