@@ -1,4 +1,4 @@
-import { Text, TextInput, View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
+import { Text, TextInput, View, StyleSheet, TouchableOpacity, BackHandler } from 'react-native'
 import React, { Component } from 'react'
 import DatePickerModal from '../common/DatePickerModal'
 import { formateDate, SCREEN } from '../constants'
@@ -25,6 +25,16 @@ class CreateTask extends Component {
 
     componentDidMount = () => {
         fetchTowerList((data) => this.setState({ towerList: data }))
+        BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
+    }
+    
+    onBackPress = () => {
+        this.props.navigation.goBack();
+        return true
+    };
+    
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
     }
 
     createTask = () => {

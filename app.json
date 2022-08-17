@@ -1,0 +1,29 @@
+{
+    "expo": {
+      "name": "TATA_LOCK",
+      "slug": "TATA_LOCK",
+      "privacy": "public",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "version": "1.0.0",
+      "orientation": "portrait",
+      "icon": "./screens/images/appstore.png",
+      "updates": {
+        "fallbackToCacheTimeout": 0
+      },
+      "assetBundlePatterns": [
+        "**/*"
+      ],
+      "ios": {
+        "supportsTablet": true
+      },
+      "description": "We are an Engineering Service Provider and engaged since the last 20 years",
+      "android": {
+        "versionCode":1,
+        "package": "com.tata.tata_lock"
+      }
+    }
+  }
+  

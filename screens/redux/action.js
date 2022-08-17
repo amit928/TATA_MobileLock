@@ -67,12 +67,13 @@ export function fetchDashboard(staf_sl) {
     return function (dispatch) {
         fetch(`${BASE_URL}/api/Dashboard/${staf_sl}`, requestOptions)
             .then(response => response.json())
-            .then(data =>
-              {if(data.Code == '200'){
-                dispatch({ type: DASHBOARD, payload: data.data[0] })
-              }
+            .then(data => {
+                if (data.Code == '200') {
+                    dispatch({ type: DASHBOARD, payload: data.data[0] })
+                }
                 else
-                    alert(data.Code)}
+                    alert(data.Code)
+            }
             )
             .catch((error) => {
                 alert(`Something Went Wrong. error : ${error}`);
@@ -155,11 +156,14 @@ export function changeTaskStatus(type, body, staf_sl) {
     return function (dispatch) {
         fetch(`${BASE_URL}/api/${type}`, requestOptions)
             .then(response => response.json())
-            .then(data =>
-                data.Code == '200' ?
+            .then(data => {
+                if (data.Code == '200') {
+                    dispatch(fetchDashboard(staf_sl))
                     dispatch(fetchTaskList(staf_sl))
-                    :
+                }
+                else
                     alert(data.Code)
+            }
             )
     }
 
@@ -187,4 +191,27 @@ export function fetchProfileData(staf_sl) {
             });
 
     }
+}
+
+export function changePassword(body) {
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: body
+    };
+    return function (dispatch) {
+        fetch(`${BASE_URL}/api/ChangePassword`, requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                if (data.Code == '200') {
+                    alert("Password Changed Successfully")
+                }
+                else
+                    alert(data.Code)
+            }
+            )
+    }
+
 }

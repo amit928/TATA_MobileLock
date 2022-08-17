@@ -22,6 +22,14 @@ export function formateDate(date) {
   return `${month}/${date.getDate()}/${date.getUTCFullYear()}`;
 };
 
+export function formatDateTime(date, time) {
+  var month = date.getUTCMonth() + 1;
+  if (month < 10) {
+    month = "0" + month;
+  }
+  return `${date.getUTCDate()}/${month}/${date.getUTCFullYear()}, ${time.getUTCHours()}:${time.getUTCMinutes()}:${time.getUTCSeconds()}`
+}
+
 export function validateTowerList(data) {
   var towerList = []
   data && data.map((value, index) => {

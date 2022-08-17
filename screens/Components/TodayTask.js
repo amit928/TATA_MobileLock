@@ -1,8 +1,8 @@
-import { Text, TouchableOpacity, View, ScrollView } from 'react-native'
+import { Text, TouchableOpacity, View, ScrollView, BackHandler } from 'react-native'
 import React, { Component } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { Card } from '@rneui/base'
-import { BASE_URL } from '../constants'
+import { BASE_URL, formatDateTime } from '../constants'
 import { Icon } from '@rneui/themed'
 import { changeTaskStatus, fetchTaskList } from '../redux/action'
 import { connect } from 'react-redux'
@@ -27,8 +27,19 @@ class TodayTask extends Component {
             sl: ""
         }
     }
+
     componentDidMount = () => {
         this.props.fetchTaskList(this.props.route.params.staf_sl)
+        BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
+    }
+
+    onBackPress = () => {
+        this.props.navigation.goBack();
+        return true
+    };
+
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
     }
 
     showDisbale(buttonType, status) {
@@ -96,7 +107,7 @@ class TodayTask extends Component {
                                                 color='white'
                                                 size={17}
                                             />
-                                            <Text style={{ fontSize: 12, color: "white", marginLeft: 8 }}>{new Date(value.for_date).toLocaleDateString()}, {new Date(value.for_time).toLocaleTimeString()}  -  {new Date(value.to_date).toLocaleDateString()}, {new Date(value.to_time).toLocaleTimeString()}</Text>
+                                            <Text style={{ fontSize: 12, color: "white", marginLeft: 8 }}>{formatDateTime(new Date(value.start_date), new Date(value.start_time))}  - {formatDateTime(new Date(value.to_date), new Date(value.to_time))}</Text>
                                         </View>
                                         <View style={{ flexDirection: "row", marginBottom: 10 }}>
                                             <Icon

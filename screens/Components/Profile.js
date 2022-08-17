@@ -1,28 +1,62 @@
-import { Text, TouchableOpacity, View } from 'react-native'
+import { BackHandler, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { Component } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { Icon } from '@rneui/themed'
 import { StyleSheet } from 'react-native'
-import { Image } from 'native-base';
+import { Button, Image, Modal } from 'native-base';
 import { connect } from 'react-redux'
-import { fetchProfileData } from '../redux/action'
+import { changePassword, fetchProfileData } from '../redux/action'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { SCREEN } from '../constants'
 
 class Profile extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            isOpen: false,
+            oldPassword: "",
+            newPassword: "",
+            confirmPassword: ""
         }
     }
 
     componentDidMount = () => {
         this.props.getProfileData(this.props.route.params.staf_sl)
+        BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
+    }
+
+    onBackPress = () => {
+        this.props.navigation.goBack();
+        return true
+    };
+
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
     }
 
     onLogout = () => {
         AsyncStorage.removeItem('MyData').then(() => {
             this.props.navigation.navigate('Welcome')
         })
+    }
+
+    changePassword = () => {
+        const { oldPassword, newPassword, confirmPassword } = this.state
+        if (oldPassword !== '' && newPassword !== '' && confirmPassword !== '') {
+            if (newPassword === confirmPassword) {
+                this.props.changePassword(JSON.stringify({
+                    staf_sl: this.props.route.params.staf_sl,
+                    new_password: newPassword
+                }))
+                this.setState({ isOpen: false })
+            }
+            else {
+                alert("Password doesn't match.")
+            }
+        }
+        else {
+            alert("Input field can not be blank.")
+        }
     }
 
     render() {
@@ -45,7 +79,7 @@ class Profile extends Component {
                     <View style={{ zIndex: 2, marginTop: -65 }}>
                     </View>
                     <View style={{ position: "absolute", width: "100%", bottom: 10 }}>
-                        <TouchableOpacity style={{ alignSelf: "center", paddingVertical: 15, backgroundColor: "#fff", borderRadius: 15, width: "92%", marginBottom: 10 }} >
+                        <TouchableOpacity style={{ alignSelf: "center", paddingVertical: 15, backgroundColor: "#fff", borderRadius: 15, width: "92%", marginBottom: 10 }} onPress={() => this.setState({ isOpen: true })} >
                             <Text style={{ textAlign: "center", fontWeight: "bold", color: "#004342" }}>Change Password</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={{ alignSelf: "center", paddingVertical: 15, backgroundColor: "#004342", borderRadius: 15, width: "92%", }} onPress={this.onLogout} >
@@ -53,6 +87,26 @@ class Profile extends Component {
                         </TouchableOpacity>
                     </View>
                 </View>
+                <Modal isOpen={this.state.isOpen} onClose={() => this.setState({ isOpen: !this.state.isOpen })}>
+
+                    <View style={{ backgroundColor: "white", display: "flex", justifyContent: "center", alignItems: "center", width: "90%", height: "40%", borderRadius: 15 }}>
+                        <View style={{ marginBottom: 20 }}>
+                            <Text style={{ fontSize: 20, fontWeight: "500", marginRight: 10 }}>Change Password</Text>
+                        </View>
+                        <View style={{ alignSelf: 'center', display: "flex", marginHorizontal: 20, width: "82%", marginBottom: 15 }}>
+                            <TextInput placeholder='Old Password' style={{ width: "100%", borderWidth: 1, borderRadius: 8, borderColor: "black", paddingHorizontal: 15, paddingVertical: 5 }} secureTextEntry onChangeText={(password) => this.setState({ oldPassword: password })} />
+                        </View>
+                        <View style={{ alignSelf: 'center', display: "flex", marginHorizontal: 20, width: "82%", marginBottom: 15 }}>
+                            <TextInput placeholder='New Password' style={{ width: "100%", borderWidth: 1, borderRadius: 8, borderColor: "black", paddingHorizontal: 15, paddingVertical: 5 }} secureTextEntry onChangeText={(password) => this.setState({ newPassword: password })} />
+                        </View>
+                        <View style={{ alignSelf: 'center', display: "flex", marginHorizontal: 20, width: "82%", marginBottom: 15 }}>
+                            <TextInput placeholder='Confirm Password' style={{ width: "100%", borderWidth: 1, borderRadius: 8, borderColor: "black", paddingHorizontal: 15, paddingVertical: 5 }} secureTextEntry onChangeText={(password) => this.setState({ confirmPassword: password })} />
+                        </View>
+                        <Button style={{ width: "82%", marginTop: 10 }} onPress={this.changePassword}>
+                            <Text style={{ fontWeight: "bold", color: "white" }}>SUBMIT</Text>
+                        </Button>
+                    </View>
+                </Modal>
             </View >
         )
     }
@@ -79,7 +133,8 @@ const mapStateToProps = store => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        getProfileData: (staf_sl) => dispatch(fetchProfileData(staf_sl))
+        getProfileData: (staf_sl) => dispatch(fetchProfileData(staf_sl)),
+        changePassword: (body) => dispatch(changePassword(body),)
     };
 };
 
