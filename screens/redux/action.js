@@ -34,7 +34,7 @@ export function onLogin(body) {
                     RootNavigation.navigate('Home')
                 }
                 else
-                    alert(data.Code)
+                    alert(data.msg)
             })
     }
 }

@@ -12,6 +12,7 @@ import { Provider } from 'react-redux';
 import configureStore from './screens/redux/configureStore';
 import { navigationRef } from './screens/RootNavigation';
 import Profile from './screens/Components/Profile';
+import TaskReport from './screens/Components/TaskReport';
 
 const Stack = createNativeStackNavigator();
 const store = configureStore()
@@ -30,7 +31,10 @@ function App() {
             <Stack.Screen name="TodayTask" component={TodayTask} options={{
               headerTitle: "Today's Task", headerTransparent: true, headerTintColor: "white", headerTitleStyle: { fontSize: 17 }
             }} />
-            <Stack.Screen name="Profile" component={Profile} options={{ headerBackVisible: true, headerTitle: 'Profile', headerTransparent: true,  headerTintColor: "white" }} />
+            <Stack.Screen name="TaskReport" component={TaskReport} options={{
+              headerTitle: "Task Report", headerTransparent: true, headerTintColor: "white", headerTitleStyle: { fontSize: 17 }
+            }} />
+            <Stack.Screen name="Profile" component={Profile} options={{ headerBackVisible: true, headerTitle: 'Profile', headerTransparent: true, headerTintColor: "white" }} />
           </Stack.Navigator>
         </NativeBaseProvider>
       </Provider>

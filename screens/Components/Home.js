@@ -16,16 +16,16 @@ class Home extends Component {
 
   componentDidMount = () => {
     BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
-}
+  }
 
-onBackPress = () => {
+  onBackPress = () => {
     BackHandler.exitApp()
     return true
-};
+  };
 
-componentWillUnmount() {
+  componentWillUnmount() {
     BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
-}
+  }
 
   formattingDate = (date) => {
     return `${days[date.getDay()]},  ${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`
@@ -95,7 +95,7 @@ componentWillUnmount() {
               </TouchableOpacity>
             </View>
             <View style={{ flexDirection: "row", justifyContent: "space-around", marginTop: 25 }}>
-              <TouchableOpacity style={styles.card}>
+              <TouchableOpacity style={styles.card} onPress={() => this.props.navigation.navigate('TaskReport', { staf_sl: this.props.loginDetails.staf_sl })} >
                 <View style={{ display: "flex", alignItems: "flex-start", borderRadius: 15, padding: 12, backgroundColor: "#CDAAFB", width: "35%", justifyContent: "center", marginBottom: 15 }}>
                   <Icon
                     name='report'
@@ -103,8 +103,8 @@ componentWillUnmount() {
                     color='#46049E'
                   />
                 </View>
-                <Text style={{ fontSize: 18, fontWeight: "bold", color: "#04376B" }}>Report</Text>
-                <Text style={{ fontSize: 13, color: "#04376B" }}>See all your report</Text>
+                <Text style={{ fontSize: 18, fontWeight: "bold", color: "#04376B" }}>Task Report</Text>
+                <Text style={{ fontSize: 13, color: "#04376B" }}>See all your task report</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.card} onPress={() => this.props.navigation.navigate('Profile', { staf_sl: this.props.loginDetails.staf_sl })}>
                 <View style={{ display: "flex", alignItems: "flex-start", borderRadius: 15, padding: 12, backgroundColor: "#CDFDF0", width: "35%", justifyContent: "center", marginBottom: 15 }}>

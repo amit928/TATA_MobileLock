@@ -107,7 +107,8 @@ class TodayTask extends Component {
                                                 color='white'
                                                 size={17}
                                             />
-                                            <Text style={{ fontSize: 12, color: "white", marginLeft: 8 }}>{formatDateTime(new Date(value.start_date), new Date(value.start_time))}  - {formatDateTime(new Date(value.to_date), new Date(value.to_time))}</Text>
+                                            <Text style={{ fontSize: 12, color: "white", marginLeft: 8 }}>
+                                                {formatDateTime(new Date(value.for_date), new Date(value.for_time))}  - {formatDateTime(new Date(value.to_date), new Date(value.to_time))}</Text>
                                         </View>
                                         <View style={{ flexDirection: "row", marginBottom: 10 }}>
                                             <Icon
@@ -138,7 +139,15 @@ class TodayTask extends Component {
                         }
                     </View>
                 </ScrollView>
-                <DateTimePickerModal title={this.state.type} isOpen={this.state.openModal} time={(data) => this.setState({ time: data })} date={(data) => this.setState({ date: data })} onClose={() => this.setState({ openModal: false })} onSubmit={this.onSubmit} />
+                <DateTimePickerModal
+                    mytime={this.state.time}
+                    mydate={this.state.date}
+                    title={this.state.type}
+                    isOpen={this.state.openModal}
+                    time={(data) => this.setState({ time: data })}
+                    date={(data) => this.setState({ date: data })}
+                    onClose={() => this.setState({ openModal: false })}
+                    onSubmit={this.onSubmit} />
             </View>
         )
     }

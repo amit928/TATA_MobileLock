@@ -13,6 +13,13 @@ export default class DateTimePickerModal extends Component {
             time: ''
         }
     }
+
+    componentWillUnmount = () => {
+        this.setState({
+            date: '',
+            time: ''
+        })
+    }
     render() {
         return (
             <View>
@@ -26,7 +33,7 @@ export default class DateTimePickerModal extends Component {
                             <View style={{ width: SCREEN.WIDTH / 2.5, padding: 5 }}>
                                 <Text style={{ marginLeft: 5 }}>Select Date</Text>
                                 <DatePickerModal
-                                    value={this.state.date}
+                                    value={this.props.mydate}
                                     onConfirm={(data) => { this.setState({ date: data }); this.props.date(data) }}
                                     placeholder='MM/DD/YY'
                                     onCancel={() => { }}
@@ -36,7 +43,7 @@ export default class DateTimePickerModal extends Component {
                             <View style={{ width: SCREEN.WIDTH / 2.5, padding: 5 }}>
                                 <Text style={{ marginLeft: 5 }}>Select Time</Text>
                                 <DatePickerModal
-                                    value={this.state.time}
+                                    value={this.props.mytime}
                                     placeholder="HH:MM"
                                     onConfirm={(data) => { this.setState({ time: data }); this.props.time(data) }}
                                     onCancel={() => { }}

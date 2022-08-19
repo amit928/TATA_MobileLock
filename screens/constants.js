@@ -27,7 +27,15 @@ export function formatDateTime(date, time) {
   if (month < 10) {
     month = "0" + month;
   }
-  return `${date.getUTCDate()}/${month}/${date.getUTCFullYear()}, ${time.getUTCHours()}:${time.getUTCMinutes()}:${time.getUTCSeconds()}`
+  var hour = time.getUTCHours()
+  if (hour < 10) {
+    hour = `0${hour}`
+  }
+  var minutes = time.getUTCMinutes()
+  if (minutes < 10) {
+    minutes = `0${minutes}`
+  }
+  return `${date.getUTCDate()}/${month}/${date.getUTCFullYear()}, ${hour}:${minutes}`
 }
 
 export function validateTowerList(data) {
