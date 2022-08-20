@@ -100,7 +100,7 @@ class TodayTask extends Component {
                                             />
                                             <Text style={{ fontSize: 12, color: "white", marginLeft: 10 }}>{value.Request_Id}</Text>
                                         </View>
-                                        <View style={{ flexDirection: "row", marginVertical: 10 }}>
+                                        <View style={{ flexDirection: "row", marginVertical: 10, marginLeft: -3 }}>
                                             <Icon
                                                 name='back-in-time'
                                                 type='entypo'
@@ -110,12 +110,21 @@ class TodayTask extends Component {
                                             <Text style={{ fontSize: 12, color: "white", marginLeft: 8 }}>
                                                 {formatDateTime(new Date(value.for_date), new Date(value.for_time))}  - {formatDateTime(new Date(value.to_date), new Date(value.to_time))}</Text>
                                         </View>
+                                        <View style={{ flexDirection: "row", marginBottom: 10, marginLeft: -3 }}>
+                                            <Icon
+                                                name='broadcast-tower'
+                                                type='font-awesome-5'
+                                                color='white'
+                                                size={14}
+                                            />
+                                            <Text style={{ fontSize: 12, color: "white", marginLeft: 10 }}>Tower : {value.DeviceFName}</Text>
+                                        </View>
                                         <View style={{ flexDirection: "row", marginBottom: 10 }}>
                                             <Icon
                                                 name='hourglass-start'
                                                 type='font-awesome-5'
                                                 color='white'
-                                                size={16}
+                                                size={15}
                                             />
                                             <Text style={{ fontSize: 12, color: "white", marginLeft: 10 }}>STATUS : {value.status}</Text>
                                         </View>

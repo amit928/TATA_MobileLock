@@ -1,5 +1,5 @@
 import { BASE_URL, validateTowerList } from "../constants";
-import { DASHBOARD, LOGIN_DETAILS, PROFILE_DATA, TASK_LIST } from "./actionType";
+import { DASHBOARD, LOGIN_DETAILS, PROFILE_DATA, TASK_LIST, TASK_REPORT } from "./actionType";
 import * as RootNavigation from '../RootNavigation';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -214,4 +214,33 @@ export function changePassword(body) {
             )
     }
 
+}
+
+export function getTaskReport(staf_sl, task_status) {
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            staf_sl: staf_sl,
+            task_status: task_status
+        })
+    };
+    return function (dispatch) {
+        fetch(`${BASE_URL}/api/TaskReport`, requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                if (data.Code == '200') {
+                    dispatch({ type: TASK_REPORT, payload: data.data })
+                }
+                else
+                    alert(data.msg)
+            }
+            )
+            .catch((error) => {
+                alert(`Something Went Wrong. error : ${error}`);
+            });
+
+    }
 }

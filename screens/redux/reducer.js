@@ -1,10 +1,11 @@
-import { DASHBOARD, LOGIN_DETAILS, PROFILE_DATA, TASK_LIST } from "./actionType";
+import { DASHBOARD, LOGIN_DETAILS, PROFILE_DATA, TASK_LIST, TASK_REPORT } from "./actionType";
 
 const initialState = {
     dashboardDetails: [],
     loginDetails: {},
     taskList: [],
     profileData: {},
+    taskReportList: []
 };
 const allInOneReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -27,6 +28,11 @@ const allInOneReducer = (state = initialState, action) => {
             return {
                 ...state,
                 profileData: action.payload
+            };
+        case TASK_REPORT:
+            return {
+                ...state,
+                taskReportList: action.payload
             };
         default:
             return state;

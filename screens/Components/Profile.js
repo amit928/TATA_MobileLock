@@ -1,4 +1,4 @@
-import { BackHandler, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Alert, BackHandler, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { Component } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { Icon } from '@rneui/themed'
@@ -35,9 +35,25 @@ class Profile extends Component {
     }
 
     onLogout = () => {
-        AsyncStorage.removeItem('MyData').then(() => {
-            this.props.navigation.navigate('Welcome')
-        })
+        Alert.alert(
+            "Logout",
+            "Are you sure, You want to logout ?",
+            [
+                {
+                    text: "No",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                },
+                {
+                    text: "Yes", onPress: () => {
+                        AsyncStorage.removeItem('MyData').then(() => {
+                            this.props.navigation.navigate('Welcome')
+                        })
+                    }
+                }
+            ]
+        )
+
     }
 
     changePassword = () => {
