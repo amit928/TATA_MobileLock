@@ -45,3 +45,5 @@ export function validateTowerList(data) {
   })
   return towerList
 }
+
+export const colors = ["#961906", "#917503", "#79f725", "#025c45", "#fa882a", "#08355c", "#b713f2", "#f50cbb", "#3d0c59", "#2922f5",]

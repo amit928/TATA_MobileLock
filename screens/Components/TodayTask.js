@@ -2,7 +2,7 @@ import { Text, TouchableOpacity, View, ScrollView, BackHandler } from 'react-nat
 import React, { Component } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { Card } from '@rneui/base'
-import { BASE_URL, formatDateTime } from '../constants'
+import { BASE_URL, colors, formatDateTime } from '../constants'
 import { Icon } from '@rneui/themed'
 import { changeTaskStatus, fetchTaskList } from '../redux/action'
 import { connect } from 'react-redux'
@@ -84,65 +84,70 @@ class TodayTask extends Component {
                         {
                             this.props.taskList.length > 0 && this.props.taskList.map((value, index) => {
                                 return (
-                                    <Card key={index} containerStyle={{
-                                        borderRadius: 10, backgroundColor: "#004342", elevation: 3,
+                                    <View key={index} style={{
+                                        borderRadius: 10, backgroundColor: "#f5fff5", elevation: 3,
                                         shadowOffset: { width: -2, height: 4 },
                                         shadowColor: '#171717',
                                         shadowOpacity: 0.2,
-                                        shadowRadius: 3,
+                                        shadowRadius: 3, marginHorizontal: 15, marginVertical: 10, paddingVertical:15
                                     }}>
                                         <View style={{ flexDirection: "row" }}>
-                                            <Icon
-                                                name='id-badge'
-                                                type='font-awesome-5'
-                                                color='white'
-                                                size={17}
-                                            />
-                                            <Text style={{ fontSize: 12, color: "white", marginLeft: 10 }}>{value.Request_Id}</Text>
-                                        </View>
-                                        <View style={{ flexDirection: "row", marginVertical: 10, marginLeft: -3 }}>
-                                            <Icon
-                                                name='back-in-time'
-                                                type='entypo'
-                                                color='white'
-                                                size={17}
-                                            />
-                                            <Text style={{ fontSize: 12, color: "white", marginLeft: 8 }}>
-                                                {formatDateTime(new Date(value.for_date), new Date(value.for_time))}  - {formatDateTime(new Date(value.to_date), new Date(value.to_time))}</Text>
-                                        </View>
-                                        <View style={{ flexDirection: "row", marginBottom: 10, marginLeft: -3 }}>
-                                            <Icon
-                                                name='broadcast-tower'
-                                                type='font-awesome-5'
-                                                color='white'
-                                                size={14}
-                                            />
-                                            <Text style={{ fontSize: 12, color: "white", marginLeft: 10 }}>Tower : {value.DeviceFName}</Text>
-                                        </View>
-                                        <View style={{ flexDirection: "row", marginBottom: 10 }}>
-                                            <Icon
-                                                name='hourglass-start'
-                                                type='font-awesome-5'
-                                                color='white'
-                                                size={15}
-                                            />
-                                            <Text style={{ fontSize: 12, color: "white", marginLeft: 10 }}>STATUS : {value.status}</Text>
-                                        </View>
-                                        <Text style={{ fontWeight: "bold", fontSize: 13, color: "white" }}>{value.description}</Text>
-                                        <View style={{ height: 0.5, backgroundColor: "gray", marginVertical: 10 }}></View>
-                                        <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
+                                            <View style={{ width: 4, backgroundColor: colors[index % 10], marginRight: 15, marginVertical: 25, position: "relative", left: -2 }}></View>
+                                            <View style={{width:"90%"}}>
+                                                <View style={{ flexDirection: "row" }}>
+                                                    <Icon
+                                                        name='id-badge'
+                                                        type='font-awesome-5'
+                                                        color='#4bafde'
+                                                        size={17}
+                                                    />
+                                                    <Text style={{ fontSize: 12, color: "#004342", marginLeft: 10 }}>{value.Request_Id}</Text>
+                                                </View>
+                                                <View style={{ flexDirection: "row", marginVertical: 10, marginLeft: -3 }}>
+                                                    <Icon
+                                                        name='back-in-time'
+                                                        type='entypo'
+                                                        color='#ccaf58'
+                                                        size={17}
+                                                    />
+                                                    <Text style={{ fontSize: 12, color: "#004342", marginLeft: 8 }}>
+                                                        {formatDateTime(new Date(value.for_date), new Date(value.for_time))}  - {formatDateTime(new Date(value.to_date), new Date(value.to_time))}</Text>
+                                                </View>
+                                                <View style={{ flexDirection: "row", marginBottom: 10, marginLeft: -3 }}>
+                                                    <Icon
+                                                        name='broadcast-tower'
+                                                        type='font-awesome-5'
+                                                        color='#ab33f5'
+                                                        size={14}
+                                                    />
+                                                    <Text style={{ fontSize: 12, color: "#004342", marginLeft: 10 }}>Tower : {value.DeviceFName}</Text>
+                                                </View>
+                                                <View style={{ flexDirection: "row", marginBottom: 10 }}>
+                                                    <Icon
+                                                        name='hourglass-start'
+                                                        type='font-awesome-5'
+                                                        color='#027a08'
+                                                        size={15}
+                                                    />
+                                                    <Text style={{ fontSize: 12, color: "#004342", marginLeft: 10 }}>STATUS : {value.status}</Text>
+                                                </View>
+                                                <Text style={{ fontWeight: "bold", fontSize: 13, color: "#004342" }}>{value.description}</Text>
+                                                <View style={{ height: 0.5, backgroundColor: "gray", marginVertical: 10 }}></View>
+                                                <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
 
-                                            <Button style={{ borderRadius: 10 }} disabled={this.showDisbale('start', value.request_status)} onPress={() => this.setState({ openModal: true, type: "Start", sl: value.sl })}>
-                                                <Text style={{ fontWeight: "bold", color: "white" }}>Start</Text>
-                                            </Button>
-                                            <Button style={{ backgroundColor: "#ccaf58", borderRadius: 10 }} disabled={this.showDisbale('extend', value.request_status)} onPress={() => this.setState({ openModal: true, type: "Extend", sl: value.sl })}>
-                                                <Text style={{ fontWeight: "bold", color: "white" }}>Extend</Text>
-                                            </Button>
-                                            <Button style={{ backgroundColor: "#93cc96", borderRadius: 10 }} disabled={this.showDisbale('complete', value.request_status)} onPress={() => this.setState({ openModal: true, type: "Complete", sl: value.sl })}>
-                                                <Text style={{ fontWeight: "bold", color: "white" }}>Complete</Text>
-                                            </Button>
+                                                    <Button style={{ borderRadius: 10, backgroundColor: "#edd2fc", borderWidth: 0.5, borderColor: "#7304de" }} disabled={this.showDisbale('start', value.request_status)} onPress={() => this.setState({ openModal: true, type: "Start", sl: value.sl })}>
+                                                        <Text style={{ fontWeight: "bold", color: "#7304de" }}>Start</Text>
+                                                    </Button>
+                                                    <Button style={{ backgroundColor: "#f5e7bf", borderRadius: 10, borderWidth: 0.5, borderColor: "#b58605" }} disabled={this.showDisbale('extend', value.request_status)} onPress={() => this.setState({ openModal: true, type: "Extend", sl: value.sl })}>
+                                                        <Text style={{ fontWeight: "bold", color: "#b58605" }}>Extend</Text>
+                                                    </Button>
+                                                    <Button style={{ backgroundColor: "#bcf7bf", borderRadius: 10, borderWidth: 0.5, borderColor: "#027a08" }} disabled={this.showDisbale('complete', value.request_status)} onPress={() => this.setState({ openModal: true, type: "Complete", sl: value.sl })}>
+                                                        <Text style={{ fontWeight: "bold", color: "#027a08" }}>Complete</Text>
+                                                    </Button>
+                                                </View>
+                                            </View>
                                         </View>
-                                    </Card>
+                                    </View>
                                 )
                             })
                         }

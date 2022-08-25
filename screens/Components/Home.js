@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { Icon } from '@rneui/themed';
 import { connect } from 'react-redux';
+import { SCREEN } from '../constants';
 
 const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
@@ -51,19 +52,21 @@ class Home extends Component {
                 />
               </View>
             </View>
-            <View style={{ flexDirection: "row", marginBottom: 50, marginTop: -20 }}>
-              <View>
-                <Text style={{ fontSize: 40, color: "#73e2b2", fontWeight: "bold" }}>{this.props.dashboardDetails["Pending_Task"]}</Text>
+            <View style={{ flexDirection: "row", marginBottom: 50, marginTop: -20, marginLeft:5 }}>
+              <View >
+                <Text style={{ fontSize: 45, color: "#73e2b2", fontWeight: "bold" }}>{this.props.dashboardDetails["Pending_Task"]<10 ? '0'+this.props.dashboardDetails["Pending_Task"] : this.props.dashboardDetails["Pending_Task"]}</Text>
                 <Text style={{ color: "#fff", fontSize: 13, }}>Tasks</Text>
                 <Text style={{ color: "#fff", fontSize: 13, }}>Pending</Text>
               </View>
-              <View style={{ marginHorizontal: 40 }}>
-                <Text style={{ fontSize: 40, color: "#73e2b2", fontWeight: "bold" }}>{this.props.dashboardDetails["Progress_Task"]}</Text>
+              <View style={{width:0.3, backgroundColor:"gray", marginVertical:25, marginHorizontal:"8%"}}></View>
+              <View >
+                <Text style={{ fontSize: 45, color: "#73e2b2", fontWeight: "bold" }}>{this.props.dashboardDetails["Progress_Task"]<10 ? '0'+this.props.dashboardDetails["Progress_Task"] : this.props.dashboardDetails["Progress_Task"]}</Text>
                 <Text style={{ color: "#fff", fontSize: 13, }}>Tasks </Text>
                 <Text style={{ color: "#fff", fontSize: 13, }}>In Progress</Text>
               </View>
-              <View>
-                <Text style={{ fontSize: 40, color: "#73e2b2", fontWeight: "bold" }}>{this.props.dashboardDetails["Completed_Task"]}</Text>
+              <View style={{width:0.3, backgroundColor:"gray", marginVertical:25,  marginHorizontal:"8%"}}></View>
+              <View >
+                <Text style={{ fontSize: 45, color: "#73e2b2", fontWeight: "bold" }}>{this.props.dashboardDetails["Completed_Task"]<10 ? '0'+this.props.dashboardDetails["Completed_Task"] : this.props.dashboardDetails["Completed_Task"]}</Text>
                 <Text style={{ color: "#fff", fontSize: 13, }}>Tasks </Text>
                 <Text style={{ color: "#fff", fontSize: 13, }}>Completed </Text>
               </View>
