@@ -19,13 +19,21 @@ export function formateDate(date) {
   if (month < 10) {
     month = "0" + month;
   }
-  return `${month}/${date.getDate()}/${date.getUTCFullYear()}`;
+  var myDate = date.getDate();
+  if (myDate < 10) {
+    myDate = "0" + myDate;
+  }
+  return `${month}/${myDate}/${date.getUTCFullYear()}`;
 };
 
 export function formatDateTime(date, time) {
   var month = date.getUTCMonth() + 1;
   if (month < 10) {
     month = "0" + month;
+  }
+  var myDate = date.getUTCDate();
+  if (myDate < 10) {
+    myDate = "0" + myDate;
   }
   var hour = time.getUTCHours()
   if (hour < 10) {
@@ -35,7 +43,7 @@ export function formatDateTime(date, time) {
   if (minutes < 10) {
     minutes = `0${minutes}`
   }
-  return `${date.getUTCDate()}/${month}/${date.getUTCFullYear()}, ${hour}:${minutes}`
+  return `${myDate}/${month}/${date.getUTCFullYear()}, ${hour}:${minutes}`
 }
 
 export function validateTowerList(data) {

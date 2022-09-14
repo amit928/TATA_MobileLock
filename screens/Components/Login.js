@@ -36,7 +36,7 @@ class Login extends Component {
                 <View style={{ height: "100%" }} >
                     <View style={{ alignItems: "flex-start", marginLeft: 30, paddingBottom: 40, marginTop: "30%" }}>
                         <Text style={{ fontSize: 30, color: "white", fontWeight: "900" }}>Sign In</Text>
-                        <Text style={{ color: "white", fontSize: 12, fontWeight: "900", marginTop: 5 }}>Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document.</Text>
+                        <Text style={{ color: "white", fontSize: 12, fontWeight: "900", marginTop: 5 }}>At Tata the community is central to our existence. This uplifting new film reminds us of our responsibility. We hope it also inspires each of us to contribute to our nation.</Text>
                     </View>
                     <View style={{ backgroundColor: "#fff", height: "70%", alignItems: "center", borderTopLeftRadius: 30, borderTopRightRadius: 30, marginHorizontal: 2 }}>
                         <View >

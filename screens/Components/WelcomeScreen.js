@@ -31,7 +31,7 @@ export default class WelcomeScreen extends Component {
                 <View style={{ backgroundColor: "#004342", height: "40%", alignItems: "center", justifyContent: "space-evenly", borderTopLeftRadius: 30, borderTopRightRadius: 30, marginHorizontal: 4 }}>
                     <View style={{ marginHorizontal: 20 }}>
                         <Text style={{ fontSize: 20, color: "white", fontWeight: "bold" }}>Welcome</Text>
-                        <Text style={{ color: "white" }}>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.</Text>
+                        <Text style={{ color: "white" }}>The company has extensively invested in improving it's employees' work life balance, so that the employee doesn't get overwhelmed about unresolved matter be it at home or work.</Text>
                     </View>
                     <View style={{ flexDirection: "row" }}>
                         <View style={{ marginEnd: 20, borderRadius: 30 }}>

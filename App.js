@@ -13,6 +13,7 @@ import configureStore from './screens/redux/configureStore';
 import { navigationRef } from './screens/RootNavigation';
 import Profile from './screens/Components/Profile';
 import TaskReport from './screens/Components/TaskReport';
+import MyCamera from './screens/Components/MyCamera';
 
 const Stack = createNativeStackNavigator();
 const store = configureStore()
@@ -25,6 +26,7 @@ function App() {
           <Stack.Navigator>
             <Stack.Screen name="Splash" component={SplashScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="Camera" component={MyCamera} options={{ headerShown: false }} />
             <Stack.Screen name="Login" component={Login} options={{ headerTitle: '', headerTransparent: true, headerTintColor: "white", headerStyle: { backgroundColor: "#004342" } }} />
             <Stack.Screen name="Home" component={Home} options={{ headerBackVisible: false, headerTitle: '', headerTransparent: true }} />
             <Stack.Screen name="CreateTask" component={CreateTask} options={{ headerTitle: 'Create Task', headerTransparent: true, headerTintColor: "white" }} />

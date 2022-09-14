@@ -160,6 +160,7 @@ export function changeTaskStatus(type, body, staf_sl) {
                 if (data.Code == '200') {
                     dispatch(fetchDashboard(staf_sl))
                     dispatch(fetchTaskList(staf_sl))
+                    RootNavigation.navigate('TodayTask');
                 }
                 else
                     alert(data.Code)

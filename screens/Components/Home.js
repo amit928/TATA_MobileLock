@@ -52,21 +52,21 @@ class Home extends Component {
                 />
               </View>
             </View>
-            <View style={{ flexDirection: "row", marginBottom: 50, marginTop: -20, marginLeft:5 }}>
+            <View style={{ flexDirection: "row", marginBottom: 50, marginTop: -20, marginLeft: 5 }}>
               <View >
-                <Text style={{ fontSize: 45, color: "#73e2b2", fontWeight: "bold" }}>{this.props.dashboardDetails["Pending_Task"]<10 ? '0'+this.props.dashboardDetails["Pending_Task"] : this.props.dashboardDetails["Pending_Task"]}</Text>
+                <Text style={{ fontSize: 45, color: "#73e2b2", fontWeight: "bold" }}>{this.props.dashboardDetails["Pending_Task"] < 10 ? '0' + this.props.dashboardDetails["Pending_Task"] : this.props.dashboardDetails["Pending_Task"]}</Text>
                 <Text style={{ color: "#fff", fontSize: 13, }}>Tasks</Text>
                 <Text style={{ color: "#fff", fontSize: 13, }}>Pending</Text>
               </View>
-              <View style={{width:0.3, backgroundColor:"gray", marginVertical:25, marginHorizontal:"8%"}}></View>
+              <View style={{ width: 0.3, backgroundColor: "gray", marginVertical: 25, marginHorizontal: "8%" }}></View>
               <View >
-                <Text style={{ fontSize: 45, color: "#73e2b2", fontWeight: "bold" }}>{this.props.dashboardDetails["Progress_Task"]<10 ? '0'+this.props.dashboardDetails["Progress_Task"] : this.props.dashboardDetails["Progress_Task"]}</Text>
+                <Text style={{ fontSize: 45, color: "#73e2b2", fontWeight: "bold" }}>{this.props.dashboardDetails["Progress_Task"] < 10 ? '0' + this.props.dashboardDetails["Progress_Task"] : this.props.dashboardDetails["Progress_Task"]}</Text>
                 <Text style={{ color: "#fff", fontSize: 13, }}>Tasks </Text>
                 <Text style={{ color: "#fff", fontSize: 13, }}>In Progress</Text>
               </View>
-              <View style={{width:0.3, backgroundColor:"gray", marginVertical:25,  marginHorizontal:"8%"}}></View>
+              <View style={{ width: 0.3, backgroundColor: "gray", marginVertical: 25, marginHorizontal: "8%" }}></View>
               <View >
-                <Text style={{ fontSize: 45, color: "#73e2b2", fontWeight: "bold" }}>{this.props.dashboardDetails["Completed_Task"]<10 ? '0'+this.props.dashboardDetails["Completed_Task"] : this.props.dashboardDetails["Completed_Task"]}</Text>
+                <Text style={{ fontSize: 45, color: "#73e2b2", fontWeight: "bold" }}>{this.props.dashboardDetails["Completed_Task"] < 10 ? '0' + this.props.dashboardDetails["Completed_Task"] : this.props.dashboardDetails["Completed_Task"]}</Text>
                 <Text style={{ color: "#fff", fontSize: 13, }}>Tasks </Text>
                 <Text style={{ color: "#fff", fontSize: 13, }}>Completed </Text>
               </View>
@@ -85,19 +85,6 @@ class Home extends Component {
                 <Text style={{ fontSize: 18, fontWeight: "bold", color: "#04376B" }}>Today's Task</Text>
                 <Text style={{ fontSize: 13, color: "#04376B" }}>{this.props.dashboardDetails.Todays_Task} New Task Added</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.card}>
-                <View style={{ display: "flex", alignItems: "flex-start", borderRadius: 15, padding: 12, backgroundColor: "#C9E884", width: "35%", justifyContent: "center", marginBottom: 15 }}>
-                  <Icon
-                    name='clipboard-list'
-                    type='font-awesome-5'
-                    color='#638C06'
-                  />
-                </View>
-                <Text style={{ fontSize: 18, fontWeight: "bold", color: "#04376B" }}>Extend Task</Text>
-                <Text style={{ fontSize: 13, color: "#04376B" }}>You have 40 task</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={{ flexDirection: "row", justifyContent: "space-around", marginTop: 25 }}>
               <TouchableOpacity style={styles.card} onPress={() => this.props.navigation.navigate('TaskReport', { staf_sl: this.props.loginDetails.staf_sl })} >
                 <View style={{ display: "flex", alignItems: "flex-start", borderRadius: 15, padding: 12, backgroundColor: "#CDAAFB", width: "35%", justifyContent: "center", marginBottom: 15 }}>
                   <Icon
@@ -108,6 +95,19 @@ class Home extends Component {
                 </View>
                 <Text style={{ fontSize: 18, fontWeight: "bold", color: "#04376B" }}>Task Report</Text>
                 <Text style={{ fontSize: 13, color: "#04376B" }}>See all your task report</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={{ flexDirection: "row", justifyContent: "space-around", marginTop: 25 }}>
+              <TouchableOpacity style={styles.card}>
+                <View style={{ display: "flex", alignItems: "flex-start", borderRadius: 15, padding: 12, backgroundColor: "#C9E884", width: "35%", justifyContent: "center", marginBottom: 15 }}>
+                  <Icon
+                    name='clipboard-list'
+                    type='font-awesome-5'
+                    color='#638C06'
+                  />
+                </View>
+                <Text style={{ fontSize: 18, fontWeight: "bold", color: "#04376B" }}>Manager</Text>
+                <Text style={{ fontSize: 13, color: "#04376B" }}>You have 10 pending approvals.</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.card} onPress={() => this.props.navigation.navigate('Profile', { staf_sl: this.props.loginDetails.staf_sl })}>
                 <View style={{ display: "flex", alignItems: "flex-start", borderRadius: 15, padding: 12, backgroundColor: "#CDFDF0", width: "35%", justifyContent: "center", marginBottom: 15 }}>

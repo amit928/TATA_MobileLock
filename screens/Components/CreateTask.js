@@ -1,4 +1,4 @@
-import { Text, TextInput, View, StyleSheet, TouchableOpacity, BackHandler } from 'react-native'
+import { Text, TextInput, View, StyleSheet, TouchableOpacity, BackHandler, ScrollView } from 'react-native'
 import React, { Component } from 'react'
 import DatePickerModal from '../common/DatePickerModal'
 import { formateDate, SCREEN } from '../constants'
@@ -7,6 +7,9 @@ import { BASE_URL } from '../constants'
 import { Dropdown } from "react-native-element-dropdown";
 import { createTaskList, fetchTowerList } from '../redux/action'
 import { connect } from 'react-redux';
+import { Icon } from '@rneui/themed'
+
+const taskList = ['demo1', 'demo2', 'demo3', 'demo4', 'demo2', 'demo3', 'demo4']
 
 class CreateTask extends Component {
     constructor(props) {
@@ -19,7 +22,7 @@ class CreateTask extends Component {
             toTime: "",
             towerList: [],
             tower: "",
-            remark: ""
+            remark: "", activities: [], activity: ""
         }
     }
 
@@ -27,12 +30,12 @@ class CreateTask extends Component {
         fetchTowerList((data) => this.setState({ towerList: data }))
         BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
     }
-    
+
     onBackPress = () => {
         this.props.navigation.goBack();
         return true
     };
-    
+
     componentWillUnmount() {
         BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
     }
@@ -42,17 +45,33 @@ class CreateTask extends Component {
             alert("Please fill all the field")
         }
         else {
-            var body = JSON.stringify({ "DeviceId": this.state.tower, "staf_sl": this.props.route.params.staf_sl, "description": this.state.remark, "for_date": formateDate(this.state.fromDate), "for_time": this.state.fromTime, "to_date": formateDate(this.state.toDate), "to_time": this.state.toTime })
+            var body = JSON.stringify({ "DeviceId": this.state.tower, "staf_sl": this.props.route.params.staf_sl, "description": this.state.remark, "for_date": formateDate(this.state.fromDate), "for_time": this.state.fromTime, "to_date": formateDate(this.state.toDate), "to_time": this.state.toTime, "activities": this.state.activities })
             this.props.createTaskList(this.props.route.params.staf_sl, body)
         }
+    }
+
+    addActivities = (text) => {
+        var myActivities = this.state.activities
+        var activity = {
+            activities: text,
+            status: "0"
+        }
+        myActivities.push(activity)
+        this.setState({ activities: myActivities, activity: "" })
+    }
+
+    removeActivity = (index) => {
+        var myActivities = this.state.activities
+        myActivities.splice(index, 1)
+        this.setState({ activities: myActivities })
     }
 
     render() {
         return (
             <View style={{ height: "100%", backgroundColor: "#004342", }}>
 
-                <Card containerStyle={{ marginTop: "30%", borderRadius: 10, marginHorizontal: "7%" }}>
-                    <View>
+                <ScrollView style={{ marginTop: "30%", borderRadius: 10, marginHorizontal: "7%", backgroundColor: "#fff", paddingHorizontal: 10, paddingVertical: 20, marginBottom: "30%" }}>
+                    <View style={{ paddingHorizontal: 10 }}>
                         <View style={{ marginBottom: 10 }}>
                             <View>
                                 <Text style={{ paddingBottom: 5 }}>Select Tower </Text>
@@ -124,7 +143,7 @@ class CreateTask extends Component {
                             />
                         </View>
                     </View>
-                    <View style={{ marginHorizontal: 10, marginTop: 5 }}>
+                    <View style={{ marginHorizontal: 10, marginTop: 5, marginBottom: 10 }}>
                         <Text style={{ marginBottom: 5 }}>Remark</Text>
                         <TextInput
                             multiline
@@ -144,9 +163,53 @@ class CreateTask extends Component {
                             }}
                         />
                     </View>
+                    <View style={{ marginHorizontal: 10 }} >
+                        <Text style={{ marginBottom: 5 }}>Add Activities</Text>
+                        <View style={{ flexDirection: "row", display: "flex", justifyContent: "space-between" }}>
+
+                            <TextInput style={{ width: "75%", borderWidth: 0.2, borderRadius: 4, backgroundColor: "#fff", padding: 5, paddingHorizontal: 12 }} placeholder="Enter Activities" value={this.state.activity} onChangeText={(e) => this.setState({ activity: e })} />
+
+                            <TouchableOpacity style={{ width: "20%", display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: "#004342", borderRadius: 4, borderWidth: 0.2, paddingVertical: 5 }} onPress={() => this.addActivities(this.state.activity)}>
+                                <Icon
+                                    name='plus'
+                                    type='entypo'
+                                    color="#fff"
+                                    size={22}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    {
+                        this.state.activities.length > 0 ?
+                            <View style={{ marginHorizontal: 10, marginVertical: 10, borderWidth: 0.5, borderBottomWidth: 0 }}>
+                                {
+                                    this.state.activities.length > 0 && this.state.activities.map((item, index) => {
+                                        return (
+                                            <View key={index} style={{ flexDirection: "row" }}>
+                                                <View style={{ width: "80%", borderBottomWidth: 0.5, paddingLeft: 10, display: "flex", justifyContent: "center" }}>
+                                                    <Text>
+                                                        {item.activities}
+                                                    </Text>
+                                                </View>
+                                                <TouchableOpacity style={{ width: "20%", display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: "#e6eded", borderWidth: 0.2, paddingVertical: 4 }} onPress={() => this.removeActivity(index)}>
+                                                    <Icon
+                                                        name='minus'
+                                                        type='entypo'
+                                                        color={"#004342"}
+                                                        size={22}
+                                                    />
+                                                </TouchableOpacity>
+                                            </View>
+                                        )
+                                    })
+                                }
+                            </View> : <></>
+                    }
+
+
                     <View style={{ marginTop: 20, alignSelf: "center", flexDirection: "row" }}>
                     </View>
-                </Card>
+                </ScrollView>
                 <TouchableOpacity style={styles.footer} onPress={this.createTask}>
                     <Text style={{ textAlign: "center", fontWeight: "bold", color: "#fff" }}>CREATE</Text>
                 </TouchableOpacity>
@@ -156,7 +219,7 @@ class CreateTask extends Component {
     }
 }
 const styles = StyleSheet.create({
-    footer: { alignSelf: "center", paddingVertical: 15, backgroundColor: "#73e2b2", borderRadius: 15, width: "92%", position: "relative", top: "26%" }
+    footer: { alignSelf: "center", paddingVertical: 15, backgroundColor: "#73e2b2", borderRadius: 15, width: "92%", position: "absolute", bottom: 20 }
 })
 
 const mapStateToProps = store => {

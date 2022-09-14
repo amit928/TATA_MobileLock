@@ -118,7 +118,7 @@ class Profile extends Component {
                         <View style={{ alignSelf: 'center', display: "flex", marginHorizontal: 20, width: "82%", marginBottom: 15 }}>
                             <TextInput placeholder='Confirm Password' style={{ width: "100%", borderWidth: 1, borderRadius: 8, borderColor: "black", paddingHorizontal: 15, paddingVertical: 5 }} secureTextEntry onChangeText={(password) => this.setState({ confirmPassword: password })} />
                         </View>
-                        <Button style={{ width: "82%", marginTop: 10 }} onPress={this.changePassword}>
+                        <Button style={{ width: "82%", marginTop: 10, backgroundColor:"#004342" }} onPress={this.changePassword}>
                             <Text style={{ fontWeight: "bold", color: "white" }}>SUBMIT</Text>
                         </Button>
                     </View>

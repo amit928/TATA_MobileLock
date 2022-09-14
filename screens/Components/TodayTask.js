@@ -53,13 +53,18 @@ class TodayTask extends Component {
         }
     }
     onSubmit = () => {
-        var body = JSON.stringify({
+        var body = {
             "sl": this.state.sl,
             "date": this.state.date,
             "time": this.state.time
-        })
+        }
         if (this.state.date !== '' && this.state.time !== '') {
-            this.props.changeTaskStatus(API_TYPE[this.state.type], body, this.props.route.params.staf_sl)
+            if (API_TYPE[this.state.type] == 'StartRequest' || API_TYPE[this.state.type] == 'CompleteRequest') {
+                this.props.navigation.navigate('Camera', { type: API_TYPE[this.state.type], body: body, staf_sl: this.props.route.params.staf_sl })
+            }
+            else {
+                this.props.changeTaskStatus(API_TYPE[this.state.type], body, this.props.route.params.staf_sl)
+            }
             this.setState({
                 openModal: false, date: '',
                 time: '',
@@ -89,11 +94,11 @@ class TodayTask extends Component {
                                         shadowOffset: { width: -2, height: 4 },
                                         shadowColor: '#171717',
                                         shadowOpacity: 0.2,
-                                        shadowRadius: 3, marginHorizontal: 15, marginVertical: 10, paddingVertical:15
+                                        shadowRadius: 3, marginHorizontal: 15, marginVertical: 10, paddingVertical: 15
                                     }}>
                                         <View style={{ flexDirection: "row" }}>
                                             <View style={{ width: 4, backgroundColor: colors[index % 10], marginRight: 15, marginVertical: 25, position: "relative", left: -2 }}></View>
-                                            <View style={{width:"90%"}}>
+                                            <View style={{ width: "90%" }}>
                                                 <View style={{ flexDirection: "row" }}>
                                                     <Icon
                                                         name='id-badge'
