@@ -51,13 +51,19 @@ class CreateTask extends Component {
     }
 
     addActivities = (text) => {
-        var myActivities = this.state.activities
-        var activity = {
-            activities: text,
-            status: "0"
+        if (text !== '') {
+            var myActivities = this.state.activities
+            var activity = {
+                activities: text,
+                status: "0"
+            }
+            myActivities.push(activity)
+            this.setState({ activities: myActivities, activity: "" })
         }
-        myActivities.push(activity)
-        this.setState({ activities: myActivities, activity: "" })
+        else {
+            alert("Please Enter An Activity")
+        }
+
     }
 
     removeActivity = (index) => {
@@ -68,9 +74,9 @@ class CreateTask extends Component {
 
     render() {
         return (
-            <View style={{ height: "100%", backgroundColor: "#004342", }}>
+            <View style={{ backgroundColor: "#004342", }}>
 
-                <ScrollView style={{ marginTop: "30%", borderRadius: 10, marginHorizontal: "7%", backgroundColor: "#fff", paddingHorizontal: 10, paddingVertical: 20, marginBottom: "30%" }}>
+                <ScrollView style={{ marginTop: "30%", borderRadius: 10, marginHorizontal: "7%", backgroundColor: "#fff", paddingHorizontal: 10, paddingVertical: 20, height: "70%", marginBottom: "20%" }}>
                     <View style={{ paddingHorizontal: 10 }}>
                         <View style={{ marginBottom: 10 }}>
                             <View>
@@ -163,7 +169,7 @@ class CreateTask extends Component {
                             }}
                         />
                     </View>
-                    <View style={{ marginHorizontal: 10 }} >
+                    <View style={{ marginHorizontal: 10, marginBottom: 10 }} >
                         <Text style={{ marginBottom: 5 }}>Add Activities</Text>
                         <View style={{ flexDirection: "row", display: "flex", justifyContent: "space-between" }}>
 
@@ -181,7 +187,7 @@ class CreateTask extends Component {
                     </View>
                     {
                         this.state.activities.length > 0 ?
-                            <View style={{ marginHorizontal: 10, marginVertical: 10, borderWidth: 0.5, borderBottomWidth: 0 }}>
+                            <View style={{ marginHorizontal: 10, marginBottom: 10, borderWidth: 0.5, borderBottomWidth: 0 }}>
                                 {
                                     this.state.activities.length > 0 && this.state.activities.map((item, index) => {
                                         return (
@@ -219,7 +225,7 @@ class CreateTask extends Component {
     }
 }
 const styles = StyleSheet.create({
-    footer: { alignSelf: "center", paddingVertical: 15, backgroundColor: "#73e2b2", borderRadius: 15, width: "92%", position: "absolute", bottom: 20 }
+    footer: { alignSelf: "center", paddingVertical: 15, backgroundColor: "#73e2b2", borderRadius: 15, width: "92%", marginBottom: "5%" }
 })
 
 const mapStateToProps = store => {

@@ -88,6 +88,7 @@ class TodayTask extends Component {
                         </View>
                         {
                             this.props.taskList.length > 0 && this.props.taskList.map((value, index) => {
+                                console.log("value", value)
                                 return (
                                     <View key={index} style={{
                                         borderRadius: 10, backgroundColor: "#f5fff5", elevation: 3,
