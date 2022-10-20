@@ -36,13 +36,16 @@ function MyCamera(props) {
 
   const changeStatus = () => {
     var myBody = props.route.params.body
-    var body = JSON.stringify({
+    var body = {
       "date": myBody.date,
       "sl": myBody.sl,
       "time": myBody.time,
       "staf_image": imageUri
-    })
-    props.changeTaskStatus(props.route.params.type, body, props.route.params.staf_sl)
+    }
+    if (props.route.params.type === 'CompleteRequest') {
+      body['activities'] = props.route.params.activities
+    }
+    props.changeTaskStatus(props.route.params.type, JSON.stringify(body), props.route.params.staf_sl)
   }
 
   return (

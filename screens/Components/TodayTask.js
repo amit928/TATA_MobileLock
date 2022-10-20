@@ -24,7 +24,8 @@ class TodayTask extends Component {
             date: '',
             time: '',
             type: '',
-            sl: ""
+            sl: "",
+            activities: []
         }
     }
 
@@ -52,6 +53,7 @@ class TodayTask extends Component {
                 return true;
         }
     }
+
     onSubmit = () => {
         var body = {
             "sl": this.state.sl,
@@ -60,10 +62,10 @@ class TodayTask extends Component {
         }
         if (this.state.date !== '' && this.state.time !== '') {
             if (API_TYPE[this.state.type] == 'StartRequest' || API_TYPE[this.state.type] == 'CompleteRequest') {
-                this.props.navigation.navigate('Camera', { type: API_TYPE[this.state.type], body: body, staf_sl: this.props.route.params.staf_sl })
+                this.props.navigation.navigate('Camera', { type: API_TYPE[this.state.type], body: body, staf_sl: this.props.route.params.staf_sl, activities: this.state.activities })
             }
             else {
-                this.props.changeTaskStatus(API_TYPE[this.state.type], body, this.props.route.params.staf_sl)
+                this.props.changeTaskStatus(API_TYPE[this.state.type], JSON.stringify(body), this.props.route.params.staf_sl)
             }
             this.setState({
                 openModal: false, date: '',
@@ -88,7 +90,6 @@ class TodayTask extends Component {
                         </View>
                         {
                             this.props.taskList.length > 0 && this.props.taskList.map((value, index) => {
-                                console.log("value", value)
                                 return (
                                     <View key={index} style={{
                                         borderRadius: 10, backgroundColor: "#f5fff5", elevation: 3,
@@ -167,6 +168,8 @@ class TodayTask extends Component {
                     time={(data) => this.setState({ time: data })}
                     date={(data) => this.setState({ date: data })}
                     onClose={() => this.setState({ openModal: false })}
+                    sl={this.state.sl}
+                    getActivities={(data) => this.setState({ activities: data })}
                     onSubmit={this.onSubmit} />
             </View>
         )

@@ -165,7 +165,9 @@ export function changeTaskStatus(type, body, staf_sl) {
                 else
                     alert(data.Code)
             }
-            )
+            ).catch((error) => {
+                alert(`Something Went Wrong. error : ${error}`);
+            });
     }
 
 }

@@ -53,11 +53,11 @@ class CreateTask extends Component {
     addActivities = (text) => {
         if (text !== '') {
             var myActivities = this.state.activities
-            var activity = {
-                activities: text,
-                status: "0"
+            var activities = {
+                activity: text,
+                activity_status: "0"
             }
-            myActivities.push(activity)
+            myActivities.push(activities)
             this.setState({ activities: myActivities, activity: "" })
         }
         else {
@@ -194,7 +194,7 @@ class CreateTask extends Component {
                                             <View key={index} style={{ flexDirection: "row" }}>
                                                 <View style={{ width: "80%", borderBottomWidth: 0.5, paddingLeft: 10, display: "flex", justifyContent: "center" }}>
                                                     <Text>
-                                                        {item.activities}
+                                                        {item.activity}
                                                     </Text>
                                                 </View>
                                                 <TouchableOpacity style={{ width: "20%", display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: "#e6eded", borderWidth: 0.2, paddingVertical: 4 }} onPress={() => this.removeActivity(index)}>

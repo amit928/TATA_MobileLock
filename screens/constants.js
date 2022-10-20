@@ -55,3 +55,23 @@ export function validateTowerList(data) {
 }
 
 export const colors = ["#961906", "#917503", "#79f725", "#025c45", "#fa882a", "#08355c", "#b713f2", "#f50cbb", "#3d0c59", "#2922f5",]
+
+export const getActivityItem = (item) => {
+  return item.map((data, i) => {
+    if (data.activity_status == 1) {
+      return data.activity
+    }
+  })
+}
+export const getActivityFromList = (activityDataList, activityName) => {
+  return activityDataList.map((item) => {
+    if (activityName == item.activity) {
+      var myItem = item
+      myItem.activity_status = item.activity_status == 1 ? 0 : 1
+      return myItem
+    }
+    else {
+      return item
+    }
+  })
+}
