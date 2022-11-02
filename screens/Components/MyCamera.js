@@ -12,6 +12,8 @@ function MyCamera(props) {
   const [type, setType] = useState(CameraType.back);
   const [camera, setCamera] = useState(null);
   const [imageUri, setImageUri] = useState(null);
+  const [imageBase64, setImageBase64] = useState(null);
+
 
   useEffect(() => {
     (async () => {
@@ -31,6 +33,8 @@ function MyCamera(props) {
     if (camera) {
       const data = await camera.takePictureAsync(null);
       setImageUri(data.uri);
+      setImageBase64(data.base64);
+
     }
   };
 
@@ -40,7 +44,7 @@ function MyCamera(props) {
       "date": myBody.date,
       "sl": myBody.sl,
       "time": myBody.time,
-      "staf_image": imageUri
+      "staf_image": imageBase64
     }
     if (props.route.params.type === 'CompleteRequest') {
       body['activities'] = props.route.params.activities
